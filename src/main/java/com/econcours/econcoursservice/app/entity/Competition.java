@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +22,7 @@ public class Competition extends ECBaseEntity {
     @Lob
     @Column(name = "title")
     private String title;
+    private String imageUrl;
     @JsonSerialize(using = CustomJsonDateUtils.JsonDateSerializer.class)
     @JsonDeserialize(using = CustomJsonDateUtils.JsonDateDeserializer.class)
     private Date deadline;

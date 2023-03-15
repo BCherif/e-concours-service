@@ -21,4 +21,5 @@ public class Establishment extends ECBaseEntity {
     @Lob
     @Column(name = "description")
     private String description;
+    private String imageUrl;
 }

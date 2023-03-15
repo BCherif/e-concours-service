@@ -56,7 +56,8 @@ public class JwtWebSecurity extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, JwtConstants.SIGN_UP_URL)
                 .permitAll()
-                .antMatchers("/images/**")
+                //.antMatchers("/images/**", JwtConstants.COMPETITION_URL, JwtConstants.ESTABLISHMENT_URL)
+                .antMatchers(JwtConstants.COMPETITION_URL, JwtConstants.ESTABLISHMENT_URL)
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -85,11 +86,13 @@ public class JwtWebSecurity extends WebSecurityConfigurerAdapter {
         return Arrays.asList("origin",
                 "content-type",
                 "accept",
+                "enctype",
                 "authorization",
                 "x-req",
                 "Origin",
                 "Content-Type",
                 "Accept",
+                "Enctype",
                 "Authorization",
                 "X-req");
     }
