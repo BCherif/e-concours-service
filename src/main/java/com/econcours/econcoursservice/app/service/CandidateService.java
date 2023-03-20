@@ -37,7 +37,7 @@ public class CandidateService extends ECDefaultBaseService<Candidate, CandidateR
                     .phone(candidateSaveEntity.getPhone())
                     .firstName(candidateSaveEntity.getFirstName())
                     .lastName(candidateSaveEntity.getLastName())
-                    .fullName(candidateSaveEntity.getFirstName().concat(candidateSaveEntity.getLastName()))
+                    .fullName(candidateSaveEntity.getFirstName() + " " + (candidateSaveEntity.getLastName()))
                     .email(candidateSaveEntity.getEmail())
                     .placeOfBirth(candidateSaveEntity.getPlaceOfBirth())
                     .build();

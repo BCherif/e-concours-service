@@ -12,6 +12,7 @@ import com.econcours.econcoursservice.base.response.ECResponse;
 import com.econcours.econcoursservice.base.service.ECDefaultBaseService;
 import com.econcours.econcoursservice.base.service.ECEntityManager;
 import com.econcours.econcoursservice.logger.ECLogger;
+import com.econcours.econcoursservice.utils.Enumeration;
 import com.econcours.econcoursservice.utils.UploadLink;
 import com.econcours.econcoursservice.wrapper.CandidacySaveEntity;
 import com.econcours.econcoursservice.wrapper.CandidateSaveEntity;
@@ -47,7 +48,7 @@ public class CandidacyService extends ECDefaultBaseService<Candidacy, CandidacyR
                     .builder()
                     .lastName(candidacySaveEntity.getLastName())
                     .firstName(candidacySaveEntity.getFirstName())
-                    .fullName(candidacySaveEntity.getFirstName().concat(candidacySaveEntity.getLastName()))
+                    .fullName(candidacySaveEntity.getFirstName() + " " + (candidacySaveEntity.getLastName()))
                     .address(candidacySaveEntity.getAddress())
                     .email(candidacySaveEntity.getEmail())
                     .phone(candidacySaveEntity.getPhone())
@@ -61,6 +62,7 @@ public class CandidacyService extends ECDefaultBaseService<Candidacy, CandidacyR
                 Candidacy candidacy = Candidacy
                         .builder()
                         .competition(optionalCompetition.get())
+                        .state(Enumeration.STATE_CANDIDACY.Instance)
                         .candidate(candidateSaved)
                         .build();
                 Candidacy candidacySaved = repository.saveAndFlush(candidacy);
