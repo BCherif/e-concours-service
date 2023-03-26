@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -24,12 +25,14 @@ public class CandidateService extends ECDefaultBaseService<Candidate, CandidateR
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final CandidateRepository candidateRepository;
 
-    public CandidateService(CandidateRepository repository, ECEntityManager manager, ECLogger logger, PasswordEncoder passwordEncoder, UserRepository userRepository, UserService userService) {
+    public CandidateService(CandidateRepository repository, ECEntityManager manager, ECLogger logger, PasswordEncoder passwordEncoder, UserRepository userRepository, UserService userService, CandidateRepository candidateRepository) {
         super(repository, manager, logger);
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.userService = userService;
+        this.candidateRepository = candidateRepository;
     }
 
 //    @Transactional
@@ -67,6 +70,31 @@ public class CandidateService extends ECDefaultBaseService<Candidate, CandidateR
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ECResponse.error("Une erreur inconnue est survenue");
+        }
+    }
+
+    public CandidateWithToken signInCandidate(String mail) {
+        try {
+            Optional<User> userOptional = userRepository.getByUsername(mail);
+            if (userOptional.isPresent()) {
+                Optional<Candidate> candidateOptional = candidateRepository.findByEmail(mail);
+                if (candidateOptional.isPresent()) {
+                    // USER PRESENT
+                    Candidate candidate = candidateOptional.get();
+
+                    CandidateWithToken candidateWithToken = CandidateWithToken.builder()
+                            .candidate(candidate)
+                            .__ac__(userService.createToken(mail))
+                            .build();
+                    return candidateWithToken;
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+           return null;
         }
     }
 

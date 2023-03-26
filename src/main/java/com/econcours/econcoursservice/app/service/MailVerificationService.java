@@ -8,7 +8,7 @@ import com.econcours.econcoursservice.base.response.ECResponse;
 import com.econcours.econcoursservice.base.service.ECDefaultBaseService;
 import com.econcours.econcoursservice.base.service.ECEntityManager;
 import com.econcours.econcoursservice.logger.ECLogger;
-import com.econcours.econcoursservice.wrapper.CandidateSaveEntity;
+import com.econcours.econcoursservice.wrapper.CandidateWithToken;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,14 +18,16 @@ public class MailVerificationService extends ECDefaultBaseService<MailVerificati
     private final MailVerificationRepository mailVerificationRepository;
     private final SendEmailService emailService;
     private final UserRepository userRepository;
-    public MailVerificationService(MailVerificationRepository repository, ECEntityManager manager, ECLogger logger, MailVerificationRepository mailVerificationRepository, SendEmailService emailService, UserRepository userRepository) {
+    private final CandidateService candidateService;
+    public MailVerificationService(MailVerificationRepository repository, ECEntityManager manager, ECLogger logger, MailVerificationRepository mailVerificationRepository, SendEmailService emailService, UserRepository userRepository, CandidateService candidateService) {
         super(repository, manager, logger);
         this.mailVerificationRepository = mailVerificationRepository;
         this.emailService = emailService;
         this.userRepository = userRepository;
+        this.candidateService = candidateService;
     }
 
-    public ECResponse<MailVerification> checkEmail(MailVerification mailVerification) {
+    public ECResponse<?> checkEmail(MailVerification mailVerification) {
         try {
             Optional<MailVerification> mailVerificationOptional = mailVerificationRepository.findByConfirmationCodeAndMail(mailVerification.getConfirmationCode(), mailVerification.getMail());
             if (mailVerificationOptional.isPresent()) {
@@ -33,8 +35,9 @@ public class MailVerificationService extends ECDefaultBaseService<MailVerificati
                 Optional<User> userOptional = userRepository.getByUsername(mailVerification.getMail());
                 if (userOptional.isPresent()) {
                     // OLD USER
-                    mailVerification.setUid("1");
-                    return ECResponse.success(mailVerification, "Code correct");
+                    CandidateWithToken candidateWithToken = candidateService.signInCandidate(mailVerification.getMail());
+                    candidateWithToken.setUid("1");
+                    return ECResponse.success(candidateWithToken, "Connecté avec succès");
                 } else {
                     // NEW USER
                     mailVerification.setUid("0");
@@ -82,15 +85,6 @@ public class MailVerificationService extends ECDefaultBaseService<MailVerificati
             result += passArray.charAt((int) Math.floor(Math.random() * charactersLength));
         }
         return result;
-    }
-
-    public ECResponse<MailVerification> createCandidate(CandidateSaveEntity candidateSaveEntity) {
-        try {
-            System.err.println("=========> " + candidateSaveEntity.getFirstName());
-            return ECResponse.success(null, "Code envoyé par mail");
-        } catch (Exception e) {
-            return ECResponse.error("Une erreur inconnue est survenue");
-        }
     }
 
     String mailTemplate(String verificationCode) {

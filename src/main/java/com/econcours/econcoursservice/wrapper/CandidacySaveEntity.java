@@ -11,22 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CandidacySaveEntity {
-    private String lastName;
+    private String candidateId;
 
-    private String firstName;
-
-    private String fullName;
-    private String email;
-
-    private String phone;
-
-    private String address;
-
-    private String placeOfBirth;
-
-    private String username;
-
-    private String password;
     private String competitionId;
+
+    private String phoneNumberToPay;
 
 }

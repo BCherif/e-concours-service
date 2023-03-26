@@ -13,4 +13,5 @@ import lombok.NoArgsConstructor;
 public class CandidateWithToken {
     public Candidate candidate;
     public String __ac__;
+    public String uid;
 }

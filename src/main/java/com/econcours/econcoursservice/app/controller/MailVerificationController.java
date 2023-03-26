@@ -18,17 +18,12 @@ public class MailVerificationController extends ECDefaultBaseController<MailVeri
     }
 
     @PostMapping("/check_mail")
-    public ECResponse<MailVerification> checkEmail(@RequestBody MailVerification mailVerification)  {
+    public ECResponse<?> checkEmail(@RequestBody MailVerification mailVerification)  {
         return mailVerificationService.checkEmail(mailVerification);
     }
 
     @GetMapping("/send_verification_code/{mail}")
     public ECResponse<?> sendVerificationCode(@PathVariable String mail) {
         return mailVerificationService.sendVerificationCode(mail);
-    }
-
-    @PostMapping("/create_candidates")
-    public ECResponse<MailVerification> createCandidate(@RequestBody CandidateSaveEntity candidateSaveEntity) {
-        return mailVerificationService.createCandidate(candidateSaveEntity);
     }
 }

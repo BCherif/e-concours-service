@@ -57,7 +57,7 @@ public class JwtWebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, JwtConstants.SIGN_UP_URL)
                 .permitAll()
                 //.antMatchers("/images/**", JwtConstants.COMPETITION_URL, JwtConstants.ESTABLISHMENT_URL)
-                .antMatchers(JwtConstants.COMPETITION_URL, JwtConstants.ESTABLISHMENT_URL, JwtConstants.MAIL_URL, JwtConstants.CANDIDATE_URL)
+                .antMatchers(JwtConstants.COMPETITION_URL, JwtConstants.ESTABLISHMENT_URL, JwtConstants.MAIL_URL, JwtConstants.CANDIDATE_URL, JwtConstants.CANDIDATE2_URL)
                 .permitAll()
                 .anyRequest()
                 .authenticated()
