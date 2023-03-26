@@ -14,7 +14,7 @@ public class CandidateController extends ECDefaultBaseController<Candidate, Cand
         super(service);
     }
 
-    @PostMapping("create")
+    @PostMapping("/create")
     public ResponseEntity<?> save(@RequestBody CandidateSaveEntity candidateSaveEntity){
         return ResponseEntity.ok(service.create(candidateSaveEntity));
     }
