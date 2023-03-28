@@ -10,6 +10,7 @@ import com.econcours.econcoursservice.app.repository.CandidacyRepository;
 import com.econcours.econcoursservice.app.repository.CandidateRepository;
 import com.econcours.econcoursservice.app.repository.CompetitionRepository;
 import com.econcours.econcoursservice.base.response.ECResponse;
+import com.econcours.econcoursservice.base.response.PageData;
 import com.econcours.econcoursservice.base.service.ECDefaultBaseService;
 import com.econcours.econcoursservice.base.service.ECEntityManager;
 import com.econcours.econcoursservice.logger.ECLogger;
@@ -17,6 +18,7 @@ import com.econcours.econcoursservice.utils.Enumeration;
 import com.econcours.econcoursservice.utils.UploadLink;
 import com.econcours.econcoursservice.wrapper.CandidacySaveEntity;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,7 +49,7 @@ public class CandidacyService extends ECDefaultBaseService<Candidacy, CandidacyR
         try {
             Optional<Competition> optionalCompetition = competitionRepository.findById(candidacySaveEntity.getCompetitionId());
             if (optionalCompetition.isPresent()) {
-                Optional<Candidacy> candidacyOptional = candidacyRepository.findByCandidateUid(candidacySaveEntity.getCandidateId());
+                Optional<Candidacy> candidacyOptional = candidacyRepository.findByCandidateUidAndCompetitionUid(candidacySaveEntity.getCandidateId(), candidacySaveEntity.getCompetitionId());
                 if (candidacyOptional.isPresent()) {
                     return ECResponse.error("Vous avez déjà postulé pour ce concours !");
                 }
@@ -75,6 +77,16 @@ public class CandidacyService extends ECDefaultBaseService<Candidacy, CandidacyR
                 return ECResponse.error(String.format("Entity N°%s not found", candidacySaveEntity.getCompetitionId()));
             }
 
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ECResponse.error("Une erreur inconnue est survenue");
+        }
+    }
+
+    public ECResponse<?> getCandidacyByCandidate(String candidateUid, Pageable pageable) {
+        try {
+            PageData<Candidacy> pageData = PageData.fromPage(candidacyRepository.findAllByCandidateUid(candidateUid, pageable));
+            return ECResponse.success(pageData, "Candidatures par candidat !");
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ECResponse.error("Une erreur inconnue est survenue");
