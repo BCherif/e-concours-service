@@ -27,17 +27,15 @@ import java.util.Optional;
 @Slf4j
 public class CandidacyService extends ECDefaultBaseService<Candidacy, CandidacyRepository> {
     private final CompetitionRepository competitionRepository;
-    private final CandidateService candidateService;
     private final AttachmentRepository attachmentRepository;
 
     private final UploadFileService uploadFileService;
     private final CandidateRepository candidateRepository;
     private final CandidacyRepository candidacyRepository;
 
-    public CandidacyService(CandidacyRepository repository, ECEntityManager manager, ECLogger logger, CompetitionRepository competitionRepository, CandidateService candidateService, AttachmentRepository attachmentRepository, UploadFileService uploadFileService, CandidateRepository candidateRepository, CandidacyRepository candidacyRepository) {
+    public CandidacyService(CandidacyRepository repository, ECEntityManager manager, ECLogger logger, CompetitionRepository competitionRepository, AttachmentRepository attachmentRepository, UploadFileService uploadFileService, CandidateRepository candidateRepository, CandidacyRepository candidacyRepository) {
         super(repository, manager, logger);
         this.competitionRepository = competitionRepository;
-        this.candidateService = candidateService;
         this.attachmentRepository = attachmentRepository;
         this.uploadFileService = uploadFileService;
         this.candidateRepository = candidateRepository;
@@ -72,7 +70,7 @@ public class CandidacyService extends ECDefaultBaseService<Candidacy, CandidacyR
                             .build();
                     attachmentRepository.save(attachment);
                 }
-                return ECResponse.success(candidacySaved.getUid(), "Ajouter avec succès !");
+                return ECResponse.success(candidacySaved.getUid(), "Votre candidature a été envoyé avec succès !");
             } else {
                 return ECResponse.error(String.format("Entity N°%s not found", candidacySaveEntity.getCompetitionId()));
             }
