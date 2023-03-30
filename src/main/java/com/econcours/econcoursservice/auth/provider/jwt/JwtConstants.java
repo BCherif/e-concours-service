@@ -9,5 +9,6 @@ public class JwtConstants {
     public static final String CANDIDATE_URL = "/candidates/create/**";
     public static final String CANDIDATE2_URL = "/candidates/sign_in/**";
     public static final String ESTABLISHMENT_URL = "/establishments/**";
+    public static final String CANDIDACY_URL = "/candidacies/**";
     public static final String TOKEN_KEY = "__ac__";
 }
