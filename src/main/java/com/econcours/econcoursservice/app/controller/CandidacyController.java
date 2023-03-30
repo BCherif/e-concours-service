@@ -26,14 +26,14 @@ public class CandidacyController extends ECDefaultBaseController<Candidacy, Cand
         super(service);
     }
 
-    @PostMapping("create")
+ /*   @PostMapping("create")
     public ResponseEntity<?> save(@RequestParam("candidacy") String newCandidacySaveEntity,
                                   @RequestParam("files") MultipartFile[] files) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         CandidacySaveEntity candidacySaveEntity = objectMapper.readValue(newCandidacySaveEntity, CandidacySaveEntity.class);
         return ResponseEntity.ok(service.create(candidacySaveEntity, files));
-    }
+    }*/
 
     @ResponseBody
     @GetMapping("/download/{file}")

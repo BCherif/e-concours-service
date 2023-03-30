@@ -1,6 +1,7 @@
 package com.econcours.econcoursservice.auth.entity;
 
 import com.econcours.econcoursservice.app.entity.Candidate;
+import com.econcours.econcoursservice.app.entity.Employee;
 import com.econcours.econcoursservice.base.entity.ECBaseEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -30,4 +31,7 @@ public class User extends ECBaseEntity {
 
     @OneToOne
     private Candidate candidate;
+
+    @OneToOne
+    private Employee employee;
 }

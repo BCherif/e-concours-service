@@ -41,7 +41,7 @@ public class CandidacyService extends ECDefaultBaseService<Candidacy, CandidacyR
         this.uploadFileService = uploadFileService;
     }
 
-    @Transactional
+  /*  @Transactional
     public ECResponse<Candidacy> create(CandidacySaveEntity candidacySaveEntity, MultipartFile[] files) {
         try {
             CandidateSaveEntity candidateSaveEntity = CandidateSaveEntity
@@ -85,5 +85,5 @@ public class CandidacyService extends ECDefaultBaseService<Candidacy, CandidacyR
             log.error(e.getMessage(), e);
             return ECResponse.error("Une erreur inconnue est survenue");
         }
-    }
+    }*/
 }
