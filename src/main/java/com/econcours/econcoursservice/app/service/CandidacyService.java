@@ -17,6 +17,7 @@ import com.econcours.econcoursservice.logger.ECLogger;
 import com.econcours.econcoursservice.utils.Enumeration;
 import com.econcours.econcoursservice.utils.UploadLink;
 import com.econcours.econcoursservice.wrapper.CandidacySaveEntity;
+import com.econcours.econcoursservice.wrapper.NotificationWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -34,14 +35,16 @@ public class CandidacyService extends ECDefaultBaseService<Candidacy, CandidacyR
     private final UploadFileService uploadFileService;
     private final CandidateRepository candidateRepository;
     private final CandidacyRepository candidacyRepository;
+    private final NotificationService notificationService;
 
-    public CandidacyService(CandidacyRepository repository, ECEntityManager manager, ECLogger logger, CompetitionRepository competitionRepository, AttachmentRepository attachmentRepository, UploadFileService uploadFileService, CandidateRepository candidateRepository, CandidacyRepository candidacyRepository) {
+    public CandidacyService(CandidacyRepository repository, ECEntityManager manager, ECLogger logger, CompetitionRepository competitionRepository, AttachmentRepository attachmentRepository, UploadFileService uploadFileService, CandidateRepository candidateRepository, CandidacyRepository candidacyRepository, NotificationService notificationService) {
         super(repository, manager, logger);
         this.competitionRepository = competitionRepository;
         this.attachmentRepository = attachmentRepository;
         this.uploadFileService = uploadFileService;
         this.candidateRepository = candidateRepository;
         this.candidacyRepository = candidacyRepository;
+        this.notificationService = notificationService;
     }
 
     @Transactional
@@ -72,6 +75,20 @@ public class CandidacyService extends ECDefaultBaseService<Candidacy, CandidacyR
                             .build();
                     attachmentRepository.save(attachment);
                 }
+
+                String notifDescription = "Votre candidature a été reçue avec succès, elle est soumise à un traitement au niveau des administrateurs, vous serez informés de son statut final qui peut avoir deux valeurs:\n"
+                        + "1. Approuvée\n"
+                        + "2. Rejetée.\n"
+                        + "Vous serez également informés du motif du statut final.\n"
+                        + "Nous vous remercions d'avoir utilisé l'application E-CONCOURS";
+
+                NotificationWrapper notificationWrapper = NotificationWrapper.builder()
+                        .title("Candidature")
+                        .description(notifDescription)
+                        .candidacyUid(candidacy.getUid())
+                        .competitionUid(candidacySaveEntity.getCompetitionId())
+                        .build();
+                notificationService.createNotification(notificationWrapper);
                 return ECResponse.success(candidacySaved.getUid(), "Votre candidature a été envoyé avec succès !");
             } else {
                 return ECResponse.error(String.format("Entity N°%s not found", candidacySaveEntity.getCompetitionId()));

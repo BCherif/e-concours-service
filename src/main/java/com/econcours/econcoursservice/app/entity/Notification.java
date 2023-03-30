@@ -16,6 +16,8 @@ import javax.persistence.*;
 public class Notification extends ECBaseEntity {
     @Column(name = "title")
     private String title;
+
+    @Lob
     @Column(name = "description")
     private String description;
     @Column(name = "type")
@@ -29,8 +31,8 @@ public class Notification extends ECBaseEntity {
     private Competition competition;
 
     @ManyToOne
-    @JoinColumn(name="candidate")
-    private Candidate candidate;
+    @JoinColumn(name="candidacy")
+    private Candidacy candidacy;
 
 //    @ManyToOne
 //    @JoinColumn(name = "candidateResultat")

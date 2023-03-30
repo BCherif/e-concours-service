@@ -13,6 +13,6 @@ public class NotificationWrapper {
     public String title;
     public String description;
     public String competitionUid;
-    public String candidateUid;
+    public String candidacyUid;
 
 }
