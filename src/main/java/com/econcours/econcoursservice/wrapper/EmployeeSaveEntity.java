@@ -20,6 +20,8 @@ public class EmployeeSaveEntity {
 
     private String job;
 
+    private String phone;
+
     private String username;
 
     private String password;

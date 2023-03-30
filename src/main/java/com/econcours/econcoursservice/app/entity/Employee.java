@@ -18,6 +18,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Employee extends ECBaseEntity {
+
     @Column(name = "lastname", nullable = false)
     private String lastName;
 
@@ -26,6 +27,9 @@ public class Employee extends ECBaseEntity {
 
     @Column(name = "email", unique = true)
     private String email;
+
+    @Column(name = "phone", nullable = false)
+    private String phone;
 
     @Column(name = "job", nullable = false)
     private String job;
