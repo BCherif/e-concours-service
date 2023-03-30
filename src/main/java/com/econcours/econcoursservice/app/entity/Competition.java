@@ -32,6 +32,9 @@ public class Competition extends ECBaseEntity {
     @Column(name = "quotation")
     private int quotation;
     private boolean state;
+    @Lob
+    private String description;
+    private Double price;
     @ManyToOne
     @JoinColumn(name = "establishment_id")
     private Establishment establishment;

@@ -48,7 +48,7 @@ public class CandidacyService extends ECDefaultBaseService<Candidacy, CandidacyR
                     .builder()
                     .lastName(candidacySaveEntity.getLastName())
                     .firstName(candidacySaveEntity.getFirstName())
-                    .fullName(candidacySaveEntity.getFirstName() + " " + (candidacySaveEntity.getLastName()))
+                    .fullName(candidacySaveEntity.getFirstName() + " " + ( candidacySaveEntity.getLastName()))
                     .address(candidacySaveEntity.getAddress())
                     .email(candidacySaveEntity.getEmail())
                     .phone(candidacySaveEntity.getPhone())
