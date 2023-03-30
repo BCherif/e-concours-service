@@ -3,7 +3,9 @@ package com.econcours.econcoursservice.app.controller;
 import com.econcours.econcoursservice.app.entity.Candidate;
 import com.econcours.econcoursservice.app.service.CandidateService;
 import com.econcours.econcoursservice.base.controller.ECDefaultBaseController;
+import com.econcours.econcoursservice.base.response.ECResponse;
 import com.econcours.econcoursservice.wrapper.CandidateSaveEntity;
+import com.econcours.econcoursservice.wrapper.CandidateWithToken;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +16,7 @@ public class CandidateController extends ECDefaultBaseController<Candidate, Cand
         super(service);
     }
 
-    @PostMapping("create")
+    @PostMapping("/create")
     public ResponseEntity<?> save(@RequestBody CandidateSaveEntity candidateSaveEntity){
         return ResponseEntity.ok(service.create(candidateSaveEntity));
     }

@@ -5,16 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CandidacySaveEntity {
-    private String candidateId;
-
-    private String competitionId;
-
-    private String phoneNumberToPay;
+public class NotificationWrapper {
+    public String title;
+    public String description;
+    public String competitionUid;
+    public String candidacyUid;
 
 }
