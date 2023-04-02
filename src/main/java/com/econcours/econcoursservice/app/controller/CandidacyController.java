@@ -59,7 +59,11 @@ public class CandidacyController extends ECDefaultBaseController<Candidacy, Cand
             System.err.println(e);
         }
         return ResponseEntity.badRequest().build();
+    }
 
+    @GetMapping("/candidacies-accept/{competitionUid}")
+    public ResponseEntity<?> findCandidaciesAccept(@PathVariable String competitionUid, Pageable pageable) {
+        return ResponseEntity.ok(service.findCandidaciesAccept(competitionUid, pageable));
     }
 
 }

@@ -109,4 +109,16 @@ public class CandidacyService extends ECDefaultBaseService<Candidacy, CandidacyR
             return ECResponse.error("Une erreur inconnue est survenue");
         }
     }
+
+    public ECResponse<?> findCandidaciesAccept(String competitionUid, Pageable pageable) {
+        try {
+            PageData<Candidacy> pageData = PageData.fromPage(repository.findAllByCompetitionUidAndState(competitionUid, Enumeration.STATE_CANDIDACY.Accept, getDefaultPageable(pageable)));
+            return ECResponse.success(pageData, "Les candidatures acceptées");
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ECResponse.error("Une erreur inconnue est survenue");
+        }
+    }
+
+
 }
