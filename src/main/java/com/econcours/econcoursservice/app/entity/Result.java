@@ -15,27 +15,14 @@ import javax.persistence.Table;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Results extends ECBaseEntity {
-    @Column(name = "lastname", nullable = false)
-    private String lastName;
-
-    @Column(name = "firstname", nullable = false)
-    private String firstName;
-
-    @Column(name = "email", unique = true)
-    private String email;
-
-    @Column(name = "phone", unique = true)
-    private String phone;
+public class Result extends ECBaseEntity {
+    @Lob
+    @Column(name = "title", nullable = false)
+    private String title;
     @Lob
     private String competitionTitle;
     private String competitionUid;
     @Lob
     private String establishmentTitle;
     private String establishmentUid;
-    private String candidacyUid;
-    @Column(
-            nullable = false
-    )
-    private Long tag;
 }
