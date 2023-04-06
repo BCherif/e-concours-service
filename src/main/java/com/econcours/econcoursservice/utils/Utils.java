@@ -1,6 +1,8 @@
 package com.econcours.econcoursservice.utils;
 
 import com.econcours.econcoursservice.base.response.ECResponse;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -49,5 +51,15 @@ public class Utils {
 
     public static boolean isCorrectUid(String uid) {
         return Objects.nonNull(uid) && uid.length() == 32;
+    }
+
+    public static <E> List<E> removeDuplicates(List<E> list) {
+        List<E> newList = new ArrayList<>();
+        for (E element : list) {
+            if (!newList.contains(element)) {
+                newList.add(element);
+            }
+        }
+        return newList;
     }
 }

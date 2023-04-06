@@ -44,6 +44,7 @@ public class EmployeeService extends ECDefaultBaseService<Employee, EmployeeRepo
                         .lastName(employeeSaveEntity.getLastName())
                         .email(employeeSaveEntity.getEmail())
                         .job(employeeSaveEntity.getJob())
+                        .phone(employeeSaveEntity.getPhone())
                         .establishment(establishment)
                         .build();
                 Employee employeeSaved = repository.save(employee);
@@ -64,7 +65,7 @@ public class EmployeeService extends ECDefaultBaseService<Employee, EmployeeRepo
         }
     }
 
-    public ECResponse<List<Employee>> findEmployeesByUid(String uid) {
+    public ECResponse<List<Employee>> findEmployeesByEstablishmentUid(String uid) {
         try {
             return ECResponse.success(repository.findAllByEstablishmentUid(uid), "Les employées lié à cet établissement");
         } catch (Exception e) {

@@ -20,7 +20,7 @@ public class EmployeeController extends ECDefaultBaseController<Employee, Employ
     }
 
     @GetMapping("/by-establishmentUid/{uid}")
-    public ResponseEntity<?> findEstablishmentsByUid(@PathVariable String uid) {
-        return ResponseEntity.ok(service.findEmployeesByUid(uid));
+    public ResponseEntity<?> findEmployeesByEstablishmentUid(@PathVariable String uid) {
+        return ResponseEntity.ok(service.findEmployeesByEstablishmentUid(uid));
     }
 }
