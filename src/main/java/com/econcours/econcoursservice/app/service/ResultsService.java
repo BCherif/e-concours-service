@@ -29,7 +29,7 @@ public class ResultsService extends ECDefaultBaseService<Result, ResultsReposito
         try {
             Result result = Result
                     .builder()
-                    .title("RESULTATS DU " + resultSaveEntity.getCompetitionTitle())
+                    .title(resultSaveEntity.getTitle())
                     .competitionTitle(resultSaveEntity.getCompetitionTitle())
                     .competitionUid(resultSaveEntity.getCompetitionUid())
                     .establishmentTitle(resultSaveEntity.getEstablishmentTitle())
