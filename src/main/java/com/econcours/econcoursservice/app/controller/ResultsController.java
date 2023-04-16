@@ -4,11 +4,9 @@ import com.econcours.econcoursservice.app.entity.Result;
 import com.econcours.econcoursservice.app.service.ResultsService;
 import com.econcours.econcoursservice.base.controller.ECDefaultBaseController;
 import com.econcours.econcoursservice.wrapper.ResultSaveEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -21,5 +19,10 @@ public class ResultsController extends ECDefaultBaseController<Result, ResultsSe
     @PostMapping("/create")
     public ResponseEntity<?> saveResult(@RequestBody ResultSaveEntity resultSaveEntity) {
         return ResponseEntity.ok(service.saveResult(resultSaveEntity));
+    }
+
+    @GetMapping("/liste-by-candidate/{candidateUid}")
+    public ResponseEntity<?> getesultByCandidate(@PathVariable String candidateUid, Pageable pageable) {
+        return ResponseEntity.ok(service.getesultByCandidate(candidateUid, pageable));
     }
 }

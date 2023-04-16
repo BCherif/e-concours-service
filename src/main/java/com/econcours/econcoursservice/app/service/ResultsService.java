@@ -5,14 +5,20 @@ import com.econcours.econcoursservice.app.entity.Result;
 import com.econcours.econcoursservice.app.repository.CompetitionResultRepository;
 import com.econcours.econcoursservice.app.repository.ResultsRepository;
 import com.econcours.econcoursservice.base.response.ECResponse;
+import com.econcours.econcoursservice.base.response.PageData;
 import com.econcours.econcoursservice.base.service.ECDefaultBaseService;
 import com.econcours.econcoursservice.base.service.ECEntityManager;
 import com.econcours.econcoursservice.logger.ECLogger;
 import com.econcours.econcoursservice.wrapper.ResultSaveEntity;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -49,6 +55,16 @@ public class ResultsService extends ECDefaultBaseService<Result, ResultsReposito
                 return ECResponse.success(resultSaved, "Résultats soumis avec succès");
             }
             return ECResponse.error("Une erreur inconnue est survenue");
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ECResponse.error("Une erreur inconnue est survenue");
+        }
+    }
+
+    public ECResponse<?> getesultByCandidate(String candidateUid, Pageable pageable) {
+        try {
+            PageData<CompetitionResult> results = PageData.fromPage(competitionResultRepository.findAllByCandidacyCandidateUid(candidateUid, pageable));
+            return ECResponse.success(results, "Résultats soumis avec succès");
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ECResponse.error("Une erreur inconnue est survenue");
